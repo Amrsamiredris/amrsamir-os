@@ -5,7 +5,7 @@ const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "con
 
 export function MobileHome({ name, headline, now }: { name: string; headline: string; now: string }) {
   return (
-    <div className="mx-auto max-w-[520px] px-5 pt-[calc(var(--menubar-h)+22px)] pb-16">
+    <div className="mx-auto max-w-[520px] px-5 pt-[calc(var(--menubar-h)+22px)] pb-16 lg:pb-32">
       <section className="widget px-5 pt-5 pb-6" aria-labelledby="m-name">
         <h1 id="m-name" className="display text-[44px]">
           {name}
@@ -32,7 +32,7 @@ export function MobileHome({ name, headline, now }: { name: string; headline: st
         <p className="px-3 py-3 text-[14px] leading-snug">{now}</p>
       </section>
 
-      <nav aria-label="Apps" className="mt-8">
+      <nav aria-label="Apps" className="mt-8 lg:hidden">
         <ul className="ios-grid">
           {GRID.map((k) => (
             <li key={k}>

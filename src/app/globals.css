@@ -628,13 +628,19 @@ a:active .app-icon {
 .home-mobile {
   display: block;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (min-height: 700px) {
   .home-desktop {
     display: block;
     position: fixed;
     inset: var(--menubar-h) 0 0 0;
   }
   .home-mobile {
+    display: none;
+  }
+}
+
+@media (max-height: 820px) {
+  .desk-clock {
     display: none;
   }
 }

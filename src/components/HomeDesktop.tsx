@@ -84,6 +84,7 @@ export function HomeDesktop(props: Props) {
 
       <Draggable
         id="clock"
+        className="desk-clock"
         area={area}
         z={z("clock")}
         onFocus={front}
@@ -103,6 +104,7 @@ export function HomeDesktop(props: Props) {
 
 function Draggable({
   id,
+  className = "",
   area,
   z,
   onFocus,
@@ -111,6 +113,7 @@ function Draggable({
   render,
 }: {
   id: WinId;
+  className?: string;
   area: React.RefObject<HTMLDivElement | null>;
   z: number;
   onFocus: (id: WinId) => void;
@@ -122,7 +125,7 @@ function Draggable({
   const reduce = useReducedMotion();
   return (
     <motion.div
-      className="absolute"
+      className={`absolute ${className}`}
       style={{ ...style, zIndex: z }}
       drag
       dragControls={controls}
