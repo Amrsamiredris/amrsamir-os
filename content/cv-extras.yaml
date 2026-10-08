@@ -1,0 +1,44 @@
+education:
+  - degree: Bachelor of Commerce and Business Administration
+    school: Helwan University
+    year: 'YYYY'
+certifications:
+  - name: Project Management Professional (PMP)
+    issuer: PMI
+    status: in-progress
+  - name: NEBOSH
+    issuer: NEBOSH
+    status: in-progress
+  - name: Digital Marketing and Social Media Management
+    issuer: '[Issuer]'
+    status: completed
+  - name: Google certification
+    issuer: Google
+    status: completed
+  - name: Meta certification
+    issuer: Meta
+    status: completed
+  - name: Harvard Online course
+    issuer: Harvard Online
+    status: completed
+skills:
+  - name: Event production and stage management
+    tracks: [events]
+  - name: Crowd management and registration
+    tracks: [events]
+  - name: Proposals, budgets and BOQs
+    tracks: [events]
+  - name: Social media strategy
+    tracks: [marketing]
+  - name: Paid social
+    tracks: [marketing]
+  - name: Bilingual copywriting (Arabic, English)
+    tracks: [marketing]
+  - name: Short-form video (CapCut, Final Cut Pro)
+    tracks: [marketing]
+  - name: Registration and ticketing systems
+    tracks: [tech, events]
+  - name: AI workflows and automation
+    tracks: [tech]
+  - name: CRM implementation
+    tracks: [tech, marketing]
