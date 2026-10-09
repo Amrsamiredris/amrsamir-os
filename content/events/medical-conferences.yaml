@@ -1,0 +1,5 @@
+name: "Medical conferences"
+client: "Pfizer, AbbVie, Eva Pharma"
+format: conference
+location: "Cairo"
+onHome: false

@@ -7,8 +7,10 @@ import { Window, ClassicWindow } from "./Window";
 import { AppIcon, type AppKey } from "./AppIcon";
 import { useNow } from "@/lib/useNow";
 import { DOORS, type DoorSlug } from "@/lib/doors";
+import { EventPool } from "./EventPool";
+import { BrandStrip } from "./BrandStrip";
+import type { PoolEvent } from "@/lib/pool";
 
-export type FeaturedItem = { slug: string; title: string; year: string; track: DoorSlug; tracks: DoorSlug[] };
 
 type Props = {
   name: string;
@@ -17,7 +19,8 @@ type Props = {
   location: string;
   languages: string;
   now: string;
-  featured: FeaturedItem[];
+  events: PoolEvent[];
+  brands: { slug: string; name: string; logo: string | null; wordmark?: boolean }[];
 };
 
 type WinId = "about" | "featured" | "now" | "clock";
@@ -58,8 +61,10 @@ export function HomeDesktop(props: Props) {
           width: "clamp(400px, 38vw, 580px)",
         }}
         render={(barProps) => (
-          <Window title="Featured work" barProps={barProps} headingId="featured-title">
-            <FeaturedList items={props.featured} />
+          <Window title="Events I've delivered" barProps={barProps} headingId="featured-title">
+            <div className="max-h-[min(360px,40vh)] overflow-y-auto">
+              <EventPool events={props.events} />
+            </div>
           </Window>
         )}
       />
@@ -72,7 +77,7 @@ export function HomeDesktop(props: Props) {
         delay={0.16}
         style={{
           left: "calc(4vw + clamp(420px, 38vw, 560px) + 60px)",
-          top: "calc(4vh + 330px)",
+          top: "calc(4vh + min(360px, 40vh) + 150px)",
           width: 300,
         }}
         render={(barProps) => (
@@ -149,7 +154,7 @@ function Draggable({
 
 /* ---------------- Window bodies ---------------- */
 
-function AboutBody({ name, headline, about, location, languages }: Props) {
+function AboutBody({ name, headline, about, location, languages, brands }: Props) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
@@ -197,44 +202,10 @@ function AboutBody({ name, headline, about, location, languages }: Props) {
           Open CV
         </Link>
       </div>
+      <div className="-mx-7 mt-6 -mb-6 border-t border-[var(--hairline)]">
+        <BrandStrip brands={brands} />
+      </div>
     </div>
-  );
-}
-
-function FeaturedList({ items }: { items: FeaturedItem[] }) {
-  if (!items.length) {
-    return <p className="subtle px-4 py-6 text-[13px]">No featured projects yet. Tick “Featured” on a project in the content editor.</p>;
-  }
-  return (
-    <table className="finder-list">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Track</th>
-          <th scope="col" className="text-right">
-            Year
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((p) => (
-          <tr key={p.slug}>
-            <td>
-              <Link href={`/${p.track}/work/${p.slug}`}>{p.title}</Link>
-            </td>
-            <td className="whitespace-nowrap">
-              <span className="inline-flex items-center gap-1.5">
-                {p.tracks.map((t) => (
-                  <span key={t} className="inline-block h-2 w-2 rounded-full" style={{ background: DOORS[t].color }} aria-hidden="true" />
-                ))}
-                {p.tracks.map((t) => DOORS[t].label).join(" + ")}
-              </span>
-            </td>
-            <td className="text-right tabular-nums">{p.year}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
   );
 }
 

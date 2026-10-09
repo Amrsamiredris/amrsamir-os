@@ -60,7 +60,7 @@ export default config({
     brand: { name: "amrsamir.me" },
     navigation: {
       Site: ["site", "doorEvents", "doorMarketing", "doorTech"],
-      Work: ["projects", "lab", "films"],
+      Work: ["events", "brands", "projects", "lab", "films"],
       CV: ["experience", "cvExtras"],
     },
   },
@@ -139,6 +139,78 @@ export default config({
     }),
   },
   collections: {
+    events: collection({
+      label: "Event pool",
+      slugField: "name",
+      path: "content/events/*",
+      format: { data: "yaml" },
+      columns: ["name", "client"],
+      schema: {
+        name: fields.slug({ name: { label: "Event name" } }),
+        client: fields.text({ label: "Client / organiser" }),
+        format: fields.select({
+          label: "Format",
+          options: [
+            { label: "Launch", value: "launch" },
+            { label: "Festival", value: "festival" },
+            { label: "Government & national", value: "government" },
+            { label: "Corporate & townhall", value: "corporate" },
+            { label: "Conference & exhibition", value: "conference" },
+            { label: "Esports & gaming", value: "esports" },
+            { label: "Film & culture", value: "film" },
+            { label: "Activation", value: "activation" },
+          ],
+          defaultValue: "corporate",
+        }),
+        location: fields.text({ label: "City" }),
+        year: fields.text({ label: "Year (optional)" }),
+        onHome: fields.checkbox({
+          label: "Show on the desktop",
+          description: "The desktop shows a shuffled selection of ticked events.",
+          defaultValue: true,
+        }),
+        project: fields.text({
+          label: "Case study slug (optional)",
+          description: "If this event has a full case study under Projects, put its slug here to link it.",
+        }),
+      },
+    }),
+    brands: collection({
+      label: "Brands (logo strip)",
+      slugField: "name",
+      path: "content/brands/*",
+      format: { data: "yaml" },
+      columns: ["name", "sector"],
+      schema: {
+        name: fields.slug({ name: { label: "Brand name" } }),
+        sector: fields.select({
+          label: "Sector",
+          options: [
+            { label: "Government", value: "government" },
+            { label: "Energy", value: "energy" },
+            { label: "Telecom & tech", value: "tech" },
+            { label: "Automotive", value: "auto" },
+            { label: "Food & drink", value: "fmcg" },
+            { label: "Entertainment & culture", value: "culture" },
+            { label: "Finance & real estate", value: "finance" },
+            { label: "Health", value: "health" },
+          ],
+          defaultValue: "government",
+        }),
+        logo: fields.image({
+          label: "Logo (SVG or transparent PNG)",
+          description: "Shown in one colour. Without a logo, the name is set in type instead.",
+          directory: "public/images/brands",
+          publicPath: "/images/brands/",
+        }),
+        logoIsWordmark: fields.checkbox({
+          label: "Logo already contains the name",
+          description: "Tick for full wordmark logos. Leave unticked for symbol-only logos, so the name is shown next to the symbol.",
+          defaultValue: false,
+        }),
+        order: fields.integer({ label: "Order (lower shows first)", defaultValue: 50 }),
+      },
+    }),
     projects: collection({
       label: "Projects (work)",
       slugField: "title",

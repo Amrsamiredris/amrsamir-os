@@ -1,0 +1,7 @@
+name: "COP28"
+client: "COP28 UAE"
+format: conference
+location: "Dubai"
+year: '2023'
+onHome: true
+project: cop28

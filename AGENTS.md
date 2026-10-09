@@ -12,6 +12,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Content lives in `content/` and is edited via Keystatic (`keystatic.config.ts`). Never hard-code copy in components.
 - Never invent metrics, clients or logos. Only use facts present in `content/`.
-- Design: tokens in `src/app/globals.css`, door accents in `src/lib/doors.ts`. Glass = modern macOS; `.win-classic` = 1-bit classic Mac, used sparingly. Do not use Apple logos, Apple icons or the SF Pro font files.
+- Design: tokens in `src/app/globals.css`, door accents in `src/lib/doors.ts`. Glass = modern macOS; `.win-classic` = 1-bit classic Mac, used sparingly. Do not use Apple logos, Apple icons or the SF Pro font files in the interface chrome. Client logos in the brand strip (`content/brands`) are the only exception.
 - Every window is a real route (deep-linkable from LinkedIn). Do not turn routes into client-only state.
 - Keep `/keystatic` and `/api/keystatic` disabled in production unless GitHub storage is configured.
+- Versions: `release/v1` is the frozen original design. v2 work happens on branch `v2` (Vercel preview) and only reaches `main` after Amr approves. Never force-push `release/*`.
+- Events in `content/events` are delivered events only. Do not add an event before it has happened.

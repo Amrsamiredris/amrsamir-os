@@ -1,0 +1,5 @@
+name: "Cairo International Film Festival"
+client: "CIFF"
+format: film
+location: "Cairo"
+onHome: true

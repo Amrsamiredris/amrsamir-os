@@ -39,3 +39,30 @@ Never store tokens in the repo. CLI logins may be per-session; re-run login if a
 3. Keystatic GitHub mode for editing on the live site (see README).
 4. Phase 3: tracked personalised links `/for/<code>` + secured dashboard.
 5. Analytics: Clarity + GA4 with a short privacy note.
+
+## Versions and rollback
+
+| Version | Where | How to go back to it |
+|---|---|---|
+| v1 (original design, 2026-10-08) | branch `release/v1` | Vercel → Deployments → pick the last `main` deployment before v2 → "Instant Rollback" (seconds). Permanent: merge `release/v1` back into `main`. |
+| v2 (finishing pass) | branch `v2` → preview URL | Merged to `main` only after approval |
+
+## Environment variables (Vercel → Project → Settings → Environment Variables)
+
+| Variable | Purpose | Where it comes from |
+|---|---|---|
+| `NEXT_PUBLIC_POSTHOG_KEY` | Analytics (primary) | PostHog → Project settings → Project API key (`phc_…`, public by design) |
+| `POSTHOG_REGION` | `eu` (default) or `us`, must match the PostHog project | |
+| `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_GA_ID` | Optional extra analytics | Clarity / GA4 dashboards |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Contact form anti-bot | Cloudflare → Turnstile → Add site (amrsamir.me) |
+| `RESEND_API_KEY` | Sends contact form mail | Resend → API keys (sending access only) |
+| `CONTACT_TO` | Inbox for form messages (comma-separated) | e.g. `contact@amrsamir.me` |
+| `CONTACT_FROM` | Optional sender, default `amrsamir.me <website@amrsamir.me>` | Domain must be verified in Resend |
+
+Secrets (`TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are set as Sensitive in Vercel and never committed.
+
+## Security notes
+
+- CSP, HSTS, frame-deny, COOP and a tight Permissions-Policy are set in `next.config.ts`. Adding a new third-party script or embed means adding its origin to the CSP there.
+- `npm audit` reports a high-severity `braces` advisory via `@keystatic/next` → `chokidar`. It affects the local dev file-watcher only, not the deployed site. Revisit when Keystatic updates.
+- Contact form: same-origin check, size cap, honeypot, minimum fill time, per-IP rate limit (best effort), Turnstile, strict validation, HTML-escaped mail.

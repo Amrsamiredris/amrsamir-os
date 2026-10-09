@@ -1,20 +1,11 @@
-import { HomeDesktop, type FeaturedItem } from "@/components/HomeDesktop";
+import { HomeDesktop } from "@/components/HomeDesktop";
 import { MobileHome } from "@/components/MobileHome";
-import { getProjects, getSite } from "@/lib/content";
-import type { DoorSlug } from "@/lib/doors";
+import { getBrands, getEvents, getSite } from "@/lib/content";
 
 export default async function Home() {
-  const [site, projects] = await Promise.all([getSite(), getProjects()]);
-  const featured: FeaturedItem[] = projects
-    .filter((p) => p.entry.featured && p.entry.tracks.length)
-    .slice(0, 8)
-    .map((p) => ({
-      slug: p.slug,
-      title: p.entry.title,
-      year: p.entry.year,
-      track: p.entry.tracks[0] as DoorSlug,
-      tracks: [...p.entry.tracks] as DoorSlug[],
-    }));
+  const [site, events, brands] = await Promise.all([getSite(), getEvents(), getBrands()]);
+  const pool = events.filter((e) => e.onHome);
+  const strip = brands.map((b) => ({ slug: b.slug, name: b.name, logo: b.logo, wordmark: b.wordmark }));
 
   return (
     <>
@@ -26,11 +17,12 @@ export default async function Home() {
           location={site.location}
           languages={site.languages}
           now={site.now}
-          featured={featured}
+          events={pool}
+          brands={strip}
         />
       </div>
       <div className="home-mobile">
-        <MobileHome name={site.name} headline={site.headline} now={site.now} />
+        <MobileHome name={site.name} headline={site.headline} now={site.now} events={pool} brands={strip} />
       </div>
     </>
   );

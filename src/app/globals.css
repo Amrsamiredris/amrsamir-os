@@ -41,6 +41,11 @@
   --radius-inner: 9px;
 
   --accent: var(--wall-ink);
+
+  /* v2: utility app tiles share the desktop's slate */
+  --danger: #b42318;
+  --tile: #2a2e37;
+  --tile-fg: #e3e6ed;
   --accent-ink: var(--label);
 
   --font-display: "Schibsted Grotesk Variable", system-ui, sans-serif;
@@ -66,6 +71,9 @@
     --glass-strong: rgb(34 36 42 / 0.88);
     --glass-sidebar: rgb(40 42 50 / 0.55);
     --glass-edge: rgb(255 255 255 / 0.12);
+    --danger: #ff8a7a;
+    --tile: #383d49;
+    --tile-fg: #eef0f4;
     --classic-bg: #101114;
     --classic-ink: #ececec;
     --shadow-win: 0 0 0 0.5px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.06) inset,
@@ -273,16 +281,35 @@ body {
 /* ---------------- App icon ---------------- */
 
 .app-icon {
+  position: relative;
   display: grid;
   place-items: center;
   width: var(--icon, 54px);
   height: var(--icon, 54px);
   border-radius: 23%;
+  overflow: hidden;
+  isolation: isolate;
   background: var(--icon-bg);
   color: var(--icon-fg);
-  box-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.45), inset 0 -1px 0 rgb(0 0 0 / 0.12),
+  box-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.35), inset 0 -1px 0 rgb(0 0 0 / 0.18),
     0 1px 2px rgb(0 0 0 / 0.18), 0 6px 14px -6px rgb(0 0 0 / 0.35);
   transition: transform 140ms ease-out;
+}
+/* 1-bit dither falling off the bottom of every tile: the wallpaper's language, on the icons */
+.app-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Crect width='1' height='1' fill='%23000'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 4px 4px;
+  opacity: 0.32;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 62%);
+  mask-image: linear-gradient(to top, #000 0%, transparent 62%);
+}
+.app-icon:not([data-door])::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'%3E%3Crect width='1' height='1' fill='%23fff'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23fff'/%3E%3C/svg%3E");
+  opacity: 0.14;
 }
 a:active .app-icon {
   transform: scale(0.94);
@@ -874,4 +901,129 @@ a:active .app-icon {
   }
 }
 
+
+/* ---------------- Brand strip (v2) ---------------- */
+
+.brand-strip {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.brand-track {
+  display: flex;
+  align-items: center;
+  gap: 44px;
+  width: max-content;
+  padding: 14px 0;
+  animation: brand-scroll 70s linear infinite;
+}
+.brand-strip:hover .brand-track,
+.brand-strip:focus-within .brand-track {
+  animation-play-state: paused;
+}
+.brand-logo-word {
+  height: 26px;
+  max-width: 130px;
+}
+@keyframes brand-scroll {
+  to {
+    transform: translateX(calc(-50% - 22px));
+  }
+}
+.brand-item {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 30px;
+}
+.brand-logo {
+  height: 22px;
+  width: auto;
+  max-width: 40px;
+  object-fit: contain;
+  filter: brightness(0);
+  opacity: 0.62;
+}
+.brand-word {
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--label);
+  opacity: 0.62;
+}
+@media (prefers-color-scheme: dark) {
+  .brand-logo {
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+  .brand-word {
+    opacity: 0.7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-strip {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .brand-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    gap: 18px 32px;
+  }
+  .brand-item[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* ---------------- Form fields (v2) ---------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--label-2);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 9px 11px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--label);
+  background: var(--glass-strong);
+  box-shadow: inset 0 0 0 0.5px var(--hairline-strong), 0 1px 0 var(--glass-edge);
+  outline: none;
+  transition: box-shadow 120ms ease;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.5;
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent-ink), 0 0 0 3px color-mix(in srgb, var(--accent-ink) 22%, transparent);
+}
+.field [aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+.contact-form {
+  position: relative;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.contact-win .win-body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 }

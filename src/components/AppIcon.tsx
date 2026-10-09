@@ -66,14 +66,21 @@ const GLYPHS: Record<AppKey, ReactNode> = {
   ),
 };
 
-export const APPS: Record<AppKey, { label: string; href: string; bg: string; fg: string }> = {
-  events: { label: "Events", href: "/events", bg: DOORS.events.color, fg: "#fff" },
-  marketing: { label: "Marketing", href: "/marketing", bg: DOORS.marketing.color, fg: "#fff" },
-  tech: { label: "Tech", href: "/tech", bg: DOORS.tech.color, fg: "#fff" },
-  lab: { label: "Lab", href: "/lab", bg: "#23262d", fg: "#e9ecf2" },
-  film: { label: "Film", href: "/film", bg: "#f4f4f6", fg: "#1b1c20" },
-  cv: { label: "CV", href: "/cv", bg: "#ffffff", fg: "#2b2f37" },
-  contact: { label: "Contact", href: "/contact", bg: "#1f8f4e", fg: "#fff" },
+/**
+ * v2 icon system: one tile family.
+ * Doors (Events, Marketing, Tech) carry their accent; every utility app is the same slate tile.
+ * Colour therefore always means "this is a door", never decoration.
+ */
+const TILE = { bg: "var(--tile)", fg: "var(--tile-fg)" };
+
+export const APPS: Record<AppKey, { label: string; href: string; bg: string; fg: string; door?: boolean }> = {
+  events: { label: "Events", href: "/events", bg: DOORS.events.color, fg: "#fff", door: true },
+  marketing: { label: "Marketing", href: "/marketing", bg: DOORS.marketing.color, fg: "#fff", door: true },
+  tech: { label: "Tech", href: "/tech", bg: DOORS.tech.color, fg: "#fff", door: true },
+  lab: { label: "Lab", href: "/lab", ...TILE },
+  film: { label: "Film", href: "/film", ...TILE },
+  cv: { label: "CV", href: "/cv", ...TILE },
+  contact: { label: "Contact", href: "/contact", ...TILE },
 };
 
 export function AppIcon({ app, size = 54 }: { app: AppKey; size?: number }) {
@@ -81,6 +88,7 @@ export function AppIcon({ app, size = 54 }: { app: AppKey; size?: number }) {
   return (
     <span
       className="app-icon"
+      data-door={a.door ? "true" : undefined}
       aria-hidden="true"
       style={{ "--icon": `${size}px`, "--icon-bg": a.bg, "--icon-fg": a.fg } as CSSProperties}
     >

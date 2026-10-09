@@ -1,9 +1,24 @@
 import Link from "next/link";
 import { AppIcon, APPS, type AppKey } from "./AppIcon";
+import { EventPool } from "./EventPool";
+import { BrandStrip } from "./BrandStrip";
+import type { PoolEvent } from "@/lib/pool";
 
 const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "contact"];
 
-export function MobileHome({ name, headline, now }: { name: string; headline: string; now: string }) {
+export function MobileHome({
+  name,
+  headline,
+  now,
+  events,
+  brands,
+}: {
+  name: string;
+  headline: string;
+  now: string;
+  events: PoolEvent[];
+  brands: { slug: string; name: string; logo: string | null; wordmark?: boolean }[];
+}) {
   return (
     <div className="mx-auto max-w-[520px] px-5 pt-[calc(var(--menubar-h)+22px)] pb-16 lg:pb-32">
       <section className="widget px-5 pt-5 pb-6" aria-labelledby="m-name">
@@ -22,6 +37,10 @@ export function MobileHome({ name, headline, now }: { name: string; headline: st
           </Link>
         </div>
       </section>
+
+      <div className="widget mt-5 overflow-hidden px-1">
+        <BrandStrip brands={brands} />
+      </div>
 
       <section className="win-classic mt-5" aria-label="Now">
         <div className="classic-bar">
@@ -44,6 +63,13 @@ export function MobileHome({ name, headline, now }: { name: string; headline: st
           ))}
         </ul>
       </nav>
+
+      <section className="widget mt-8 overflow-hidden" aria-labelledby="m-events">
+        <h2 id="m-events" className="h3 px-4 pt-4 pb-1">
+          Events I&apos;ve delivered
+        </h2>
+        <EventPool events={events} limit={8} />
+      </section>
     </div>
   );
 }

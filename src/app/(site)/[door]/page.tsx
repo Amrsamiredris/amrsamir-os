@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectTile, trackColor } from "@/components/ProjectTile";
-import { getDoor, getProjects } from "@/lib/content";
+import { getBrands, getDoor, getEvents, getProjects } from "@/lib/content";
+import { EventPool } from "@/components/EventPool";
+import { BrandStrip } from "@/components/BrandStrip";
 import { DOORS, type DoorSlug } from "@/lib/doors";
 
 export async function generateMetadata({ params }: PageProps<"/[door]">): Promise<Metadata> {
@@ -17,7 +19,12 @@ export async function generateMetadata({ params }: PageProps<"/[door]">): Promis
 
 export default async function DoorOverview({ params }: PageProps<"/[door]">) {
   const { door } = (await params) as { door: DoorSlug };
-  const [content, projects] = await Promise.all([getDoor(door), getProjects(door)]);
+  const [content, projects, events, brands] = await Promise.all([getDoor(door), getProjects(door), getEvents(), getBrands()]);
+  const sectorsFor: Record<DoorSlug, string[] | null> = { events: null, marketing: null, tech: ["tech", "culture"] };
+  const sectors = sectorsFor[door];
+  const strip = brands
+    .filter((b) => !sectors || sectors.includes(b.sector))
+    .map((b) => ({ slug: b.slug, name: b.name, logo: b.logo, wordmark: b.wordmark }));
   const work = projects.slice(0, 6);
 
   return (
@@ -54,10 +61,27 @@ export default async function DoorOverview({ params }: PageProps<"/[door]">) {
         </section>
       ) : null}
 
+      {strip.length ? (
+        <div className="mt-12 border-y border-[var(--hairline)]">
+          <BrandStrip brands={strip} />
+        </div>
+      ) : null}
+
+      {door === "events" && events.length ? (
+        <section className="mt-14" aria-labelledby="pool">
+          <h2 id="pool" className="h2">
+            Events I&apos;ve delivered
+          </h2>
+          <div className="mt-4 overflow-hidden rounded-[var(--radius-inner)] shadow-[0_0_0_0.5px_var(--hairline-strong)]" style={{ background: "var(--glass-strong)" }}>
+            <EventPool events={events} showLocation />
+          </div>
+        </section>
+      ) : null}
+
       <section className="mt-14" aria-labelledby="work">
         <div className="flex items-baseline justify-between gap-4">
           <h2 id="work" className="h2">
-            Selected work
+            {door === "events" ? "Case studies" : "Selected work"}
           </h2>
           {projects.length > work.length ? (
             <Link href={`/${door}/work`} className="accent-ink text-[13px] font-medium">

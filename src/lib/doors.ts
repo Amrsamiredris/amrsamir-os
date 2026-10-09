@@ -12,10 +12,14 @@ export type Door = {
   inkDark: string;
 };
 
+/**
+ * v2 palette: the three accents share one OKLCH lightness (0.57) and chroma (0.19),
+ * so they read as one family against the slate desktop. White on each fill is >= 4.5:1.
+ */
 export const DOORS: Record<DoorSlug, Door> = {
-  events: { slug: "events", label: "Events", color: "#EE6A1F", ink: "#B14700", inkDark: "#FF9A5C" },
-  marketing: { slug: "marketing", label: "Marketing", color: "#D6247A", ink: "#A8155F", inkDark: "#FF7AB6" },
-  tech: { slug: "tech", label: "Tech", color: "#3550FF", ink: "#2238D4", inkDark: "#8C9CFF" },
+  events: { slug: "events", label: "Events", color: "#C05100", ink: "#9E4500", inkDark: "#FA9D6B" },
+  marketing: { slug: "marketing", label: "Marketing", color: "#C7367B", ink: "#A72A68", inkDark: "#F893BC" },
+  tech: { slug: "tech", label: "Tech", color: "#486BE5", ink: "#3A58C3", inkDark: "#99B5FF" },
 };
 
 export function isDoor(value: string): value is DoorSlug {

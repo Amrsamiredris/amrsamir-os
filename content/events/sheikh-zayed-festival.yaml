@@ -1,0 +1,7 @@
+name: "Sheikh Zayed Festival"
+client: "LINKVIVA"
+format: festival
+location: "Abu Dhabi"
+year: '2026'
+onHome: true
+project: szf-2026-registration

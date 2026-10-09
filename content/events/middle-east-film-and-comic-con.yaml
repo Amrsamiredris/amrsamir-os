@@ -1,0 +1,7 @@
+name: "Middle East Film & Comic Con"
+client: "MEFCC"
+format: festival
+location: "Abu Dhabi"
+year: '2025'
+onHome: true
+project: mefcc-2025

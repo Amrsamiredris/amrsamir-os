@@ -1,0 +1,7 @@
+name: "EA Sports FC 25 Ramadan Tournament"
+client: "EA Sports FC"
+format: esports
+location: "UAE"
+year: '2025'
+onHome: true
+project: ea-sports-fc-ramadan

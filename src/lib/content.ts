@@ -56,3 +56,15 @@ export async function getFilms() {
 export async function getFilm(slug: string) {
   return reader.collections.films.read(slug, { resolveLinkedFiles: true });
 }
+
+export async function getEvents() {
+  const all = await reader.collections.events.all();
+  return all.map((e) => ({ slug: e.slug, ...e.entry }));
+}
+
+export async function getBrands() {
+  const all = await reader.collections.brands.all();
+  return all
+    .map((b) => ({ slug: b.slug, name: b.entry.name, sector: b.entry.sector, logo: b.entry.logo, wordmark: b.entry.logoIsWordmark, order: b.entry.order ?? 50 }))
+    .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+}
