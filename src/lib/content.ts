@@ -68,3 +68,12 @@ export async function getBrands() {
     .map((b) => ({ slug: b.slug, name: b.entry.name, sector: b.entry.sector, logo: b.entry.logo, wordmark: b.entry.logoIsWordmark, order: b.entry.order ?? 50 }))
     .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
 }
+
+/** Companies from the Lab, for links on the desktop and phone home screen. */
+export async function getCompanies() {
+  const all = await reader.collections.lab.all();
+  return all
+    .filter((i) => i.entry.kind === "company" && i.entry.url)
+    .map((i) => ({ slug: i.slug, title: i.entry.title, url: i.entry.url as string }))
+    .sort((a, b) => a.title.localeCompare(b.title));
+}

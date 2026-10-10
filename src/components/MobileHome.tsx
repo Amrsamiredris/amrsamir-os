@@ -12,12 +12,14 @@ export function MobileHome({
   now,
   events,
   brands,
+  companies,
 }: {
   name: string;
   headline: string;
   now: string;
   events: PoolEvent[];
   brands: { slug: string; name: string; logo: string | null; wordmark?: boolean }[];
+  companies: { slug: string; title: string; url: string }[];
 }) {
   return (
     <div className="mx-auto max-w-[520px] px-5 pt-[calc(var(--menubar-h)+22px)] pb-16 lg:pb-32">
@@ -36,6 +38,19 @@ export function MobileHome({
             Open CV
           </Link>
         </div>
+        {companies.length ? (
+          <p className="mt-5 text-[14px]">
+            <span className="subtle">My companies: </span>
+            {companies.map((c, i) => (
+              <span key={c.slug}>
+                {i ? ", " : ""}
+                <a href={c.url} target="_blank" rel="noopener" className="font-medium underline decoration-[var(--hairline-strong)] underline-offset-[3px]">
+                  {c.title}
+                </a>
+              </span>
+            ))}
+          </p>
+        ) : null}
       </section>
 
       <div className="widget mt-5 overflow-hidden px-1">

@@ -21,6 +21,7 @@ type Props = {
   now: string;
   events: PoolEvent[];
   brands: { slug: string; name: string; logo: string | null; wordmark?: boolean }[];
+  companies: { slug: string; title: string; url: string }[];
 };
 
 type WinId = "about" | "featured" | "now" | "clock";
@@ -154,7 +155,7 @@ function Draggable({
 
 /* ---------------- Window bodies ---------------- */
 
-function AboutBody({ name, headline, about, location, languages, brands }: Props) {
+function AboutBody({ name, headline, about, location, languages, brands, companies }: Props) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
@@ -190,6 +191,25 @@ function AboutBody({ name, headline, about, location, languages, brands }: Props
             </Link>
           ))}
         </dd>
+        {companies.length ? (
+          <>
+            <dt className="subtle">My companies</dt>
+            <dd className="flex flex-wrap gap-x-3">
+              {companies.map((c) => (
+                <a
+                  key={c.slug}
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-medium underline decoration-[var(--hairline-strong)] underline-offset-[3px] hover:decoration-current"
+                >
+                  {c.title}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ))}
+            </dd>
+          </>
+        ) : null}
         <dt className="subtle">Languages</dt>
         <dd>{languages}</dd>
       </dl>

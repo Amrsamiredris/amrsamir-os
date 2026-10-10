@@ -1,9 +1,9 @@
 import { HomeDesktop } from "@/components/HomeDesktop";
 import { MobileHome } from "@/components/MobileHome";
-import { getBrands, getEvents, getSite } from "@/lib/content";
+import { getBrands, getCompanies, getEvents, getSite } from "@/lib/content";
 
 export default async function Home() {
-  const [site, events, brands] = await Promise.all([getSite(), getEvents(), getBrands()]);
+  const [site, events, brands, companies] = await Promise.all([getSite(), getEvents(), getBrands(), getCompanies()]);
   const pool = events.filter((e) => e.onHome);
   const strip = brands.map((b) => ({ slug: b.slug, name: b.name, logo: b.logo, wordmark: b.wordmark }));
 
@@ -19,10 +19,11 @@ export default async function Home() {
           now={site.now}
           events={pool}
           brands={strip}
+          companies={companies}
         />
       </div>
       <div className="home-mobile">
-        <MobileHome name={site.name} headline={site.headline} now={site.now} events={pool} brands={strip} />
+        <MobileHome name={site.name} headline={site.headline} now={site.now} events={pool} brands={strip} companies={companies} />
       </div>
     </>
   );

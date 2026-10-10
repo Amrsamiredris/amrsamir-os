@@ -278,6 +278,7 @@ export default config({
         kind: fields.select({
           label: "Kind",
           options: [
+            { label: "Company", value: "company" },
             { label: "App", value: "app" },
             { label: "Experiment", value: "experiment" },
             { label: "Writing", value: "writing" },
