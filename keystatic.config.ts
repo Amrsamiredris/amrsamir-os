@@ -280,7 +280,7 @@ export default config({
       },
     }),
     lab: collection({
-      label: "Lab (side projects & apps)",
+      label: "Lab (companies & side projects)",
       slugField: "title",
       path: "content/lab/*",
       format: { contentField: "body" },
