@@ -1,0 +1,5 @@
+name: "Louvre Abu Dhabi and Qasr Al Hosn activations"
+client: "DCT Abu Dhabi"
+format: activation
+location: "Abu Dhabi"
+onHome: true

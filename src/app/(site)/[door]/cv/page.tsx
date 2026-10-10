@@ -25,9 +25,9 @@ export default async function DoorCv({ params }: PageProps<"/[door]/cv">) {
     <>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h1 className="h2">{DOORS[door].label} CV</h1>
-        {content.cvPdf ? (
-          <a href={content.cvPdf} className="btn btn-primary" download>
-            Download PDF
+        {content.cvPdf || site.cvPdf ? (
+          <a href={content.cvPdf || site.cvPdf || undefined} className="btn btn-primary" download>
+            {content.cvPdf ? "Download PDF" : "Download full CV (PDF)"}
           </a>
         ) : (
           <span className="btn" aria-disabled="true" title="Upload a PDF for this track in the content editor">

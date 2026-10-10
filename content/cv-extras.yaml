@@ -1,16 +1,16 @@
 education:
-  - degree: Bachelor of Commerce and Business Administration
-    school: Helwan University
-    year: 'YYYY'
+  - degree: Bachelor of Commerce and Business Administration (Major in Business Management and Marketing)
+    school: Helwan University, Egypt
+    year: '2021'
 certifications:
   - name: Project Management Professional (PMP)
     issuer: PMI
     status: in-progress
-  - name: NEBOSH
-    issuer: NEBOSH
-    status: in-progress
+  - name: Project Management
+    issuer: ''
+    status: completed
   - name: Digital Marketing and Social Media Management
-    issuer: '[Issuer]'
+    issuer: ''
     status: completed
   - name: Google certification
     issuer: Google
@@ -18,27 +18,41 @@ certifications:
   - name: Meta certification
     issuer: Meta
     status: completed
-  - name: Harvard Online course
+  - name: Harvard Online certification
     issuer: Harvard Online
     status: completed
 skills:
-  - name: Event production and stage management
+  - name: End-to-end event production, RFP to post-event report
     tracks: [events]
-  - name: Crowd management and registration
+  - name: Supplier and production management
     tracks: [events]
-  - name: Proposals, budgets and BOQs
+  - name: Concept and proposal development
+    tracks: [events, marketing]
+  - name: Run-of-show design
     tracks: [events]
-  - name: Social media strategy
+  - name: Vendor and contractor management
+    tracks: [events]
+  - name: Risk management
+    tracks: [events]
+  - name: Budget and contract management
+    tracks: [events, marketing]
+  - name: Client relationship ownership
+    tracks: [events, marketing]
+  - name: Stakeholder management
+    tracks: [events, marketing]
+  - name: Account growth and upselling
+    tracks: [marketing]
+  - name: Integrated campaign strategy
     tracks: [marketing]
   - name: Paid social
     tracks: [marketing]
-  - name: Bilingual copywriting (Arabic, English)
+  - name: Social listening and performance analytics
     tracks: [marketing]
-  - name: Short-form video (CapCut, Final Cut Pro)
+  - name: Brandwatch, Talkwalker, Sprinklr, HubSpot, Google Analytics
     tracks: [marketing]
-  - name: Registration and ticketing systems
+  - name: Registration, ticketing and QR check-in systems
     tracks: [tech, events]
-  - name: AI workflows and automation
+  - name: AI agents and workflow automation
     tracks: [tech]
   - name: CRM implementation
     tracks: [tech, marketing]

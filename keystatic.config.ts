@@ -90,6 +90,17 @@ export default config({
         email: fields.text({ label: "Email" }),
         phone: fields.text({ label: "Phone" }),
         linkedin: fields.url({ label: "LinkedIn URL" }),
+        cvTitle: fields.text({
+          label: "CV title line",
+          description: "Shown under your name on the CV page, e.g. 'Project Manager | Mega Events & Large-Scale Productions'.",
+        }),
+        cvSummary: fields.text({ label: "CV summary (main CV)", multiline: true }),
+        cvPdf: fields.file({
+          label: "Main CV PDF",
+          description: "The file people download from the CV page and the desktop CV icon. Track CVs (Events, Marketing, Tech) are set in each door.",
+          directory: "public/files/cv",
+          publicPath: "/files/cv/",
+        }),
         portrait: fields.image({
           label: "Portrait",
           directory: "public/images/site",
