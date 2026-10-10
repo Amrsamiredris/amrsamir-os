@@ -37,6 +37,20 @@ export default async function LabItem({ params }: PageProps<"/lab/[slug]">) {
             ) : (
               <p className="subtle mt-6 text-[13px]">Not deployed yet.</p>
             )}
+            {i.cover ? (
+              <figure className="mt-8 max-w-[880px]">
+                {i.url ? (
+                  <a href={i.url} target="_blank" rel="noopener" className="block overflow-hidden rounded-[var(--radius-inner)] shadow-[var(--shadow-chip)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={i.cover} alt={`${i.title} website, home page`} className="block w-full" loading="lazy" />
+                  </a>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={i.cover} alt={`${i.title}`} className="block w-full rounded-[var(--radius-inner)]" loading="lazy" />
+                )}
+                {i.url ? <figcaption className="subtle mt-2 text-[12px]">{i.url.replace(/^https?:\/\//, "")}</figcaption> : null}
+              </figure>
+            ) : null}
             <div className="mt-10">
               <Prose node={i.body.node} />
             </div>
