@@ -9,6 +9,9 @@
  * Env (Vercel): RESEND_API_KEY, TURNSTILE_SECRET_KEY, CONTACT_TO, CONTACT_FROM (optional)
  */
 
+import { store, storeConfigured } from "@/lib/admin/store";
+import { limited } from "@/lib/admin/ratelimit";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -67,7 +70,8 @@ export async function POST(req: Request) {
   }
 
   const ip = (req.headers.get("x-forwarded-for") ?? "").split(",")[0].trim() || "unknown";
-  if (rateLimited(ip)) return json(429, { error: "Too many messages from your connection. Try again in a few minutes." });
+  const over = storeConfigured ? await limited(`contact:${ip}`, MAX_PER_WINDOW, WINDOW_MS / 1000).catch(() => rateLimited(ip)) : rateLimited(ip);
+  if (over) return json(429, { error: "Too many messages from your connection. Try again in a few minutes." });
 
   const name = oneLine(clean(data.name, 100));
   const email = oneLine(clean(data.email, 200));
@@ -92,6 +96,13 @@ export async function POST(req: Request) {
   const subject = `[amrsamir.me] ${topic}: ${name}${company ? `, ${company}` : ""}`.slice(0, 180);
   const text = `${message}\n\n--\n${name}${company ? ` (${company})` : ""}\n${email}\nTopic: ${topic}\nSent from the amrsamir.me contact form`;
   const html = `<p style="white-space:pre-wrap;font:15px/1.5 system-ui,sans-serif">${esc(message)}</p><hr><p style="font:13px/1.5 system-ui,sans-serif;color:#555">${esc(name)}${company ? ` (${esc(company)})` : ""}<br>${esc(email)}<br>Topic: ${esc(topic)}<br>Sent from the amrsamir.me contact form</p>`;
+
+  // Keep a copy in the admin inbox (works even if email delivery fails).
+  if (storeConfigured) {
+    await store()
+      .lpush("contact:messages", { at: Date.now(), name, email, company, topic, message, ip }, 500)
+      .catch(() => null);
+  }
 
   const sent = await fetch("https://api.resend.com/emails", {
     method: "POST",

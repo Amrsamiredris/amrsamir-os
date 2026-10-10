@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppIcon, APPS, type AppKey } from "./AppIcon";
 import { EventPool } from "./EventPool";
+import { TrackedLink } from "./TrackedLink";
 import { BrandStrip } from "./BrandStrip";
 import type { PoolEvent } from "@/lib/pool";
 
@@ -44,9 +45,9 @@ export function MobileHome({
             {companies.map((c, i) => (
               <span key={c.slug}>
                 {i ? ", " : ""}
-                <a href={c.url} target="_blank" rel="noopener" className="font-medium underline decoration-[var(--hairline-strong)] underline-offset-[3px]">
+                <TrackedLink event="company_click" props={{ company: c.title, from: "mobile" }} href={c.url} target="_blank" rel="noopener" className="font-medium underline decoration-[var(--hairline-strong)] underline-offset-[3px]">
                   {c.title}
-                </a>
+                </TrackedLink>
               </span>
             ))}
           </p>

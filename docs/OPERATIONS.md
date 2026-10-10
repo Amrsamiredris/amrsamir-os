@@ -66,3 +66,30 @@ Secrets (`TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`) are set as Sensitive in Verce
 - CSP, HSTS, frame-deny, COOP and a tight Permissions-Policy are set in `next.config.ts`. Adding a new third-party script or embed means adding its origin to the CSP there.
 - `npm audit` reports a high-severity `braces` advisory via `@keystatic/next` → `chokidar`. It affects the local dev file-watcher only, not the deployed site. Revisit when Keystatic updates.
 - Contact form: same-origin check, size cap, honeypot, minimum fill time, per-IP rate limit (best effort), Turnstile, strict validation, HTML-escaped mail.
+
+## Admin area (`/admin`)
+
+One owner, signed in with a passkey (Touch ID / Face ID) or a password. Same login protects the content editor at `/keystatic`.
+
+| Piece | How it works |
+|---|---|
+| Storage | Upstash Redis (Vercel → Storage → Upstash for Redis). Holds the password hash, passkey public keys, sessions, rate-limit counters, audit log, contact messages |
+| Sign-in | Passkey (WebAuthn, user verification required) or password (scrypt). 5 password tries / 15 min per IP, 20 / hour site-wide |
+| Session | HMAC-signed cookie `__Host-amr_admin`, HttpOnly, Secure, SameSite=Lax, 12 h; server checks it against Redis on every request; "Sign out everywhere" invalidates all |
+| Gates | `src/proxy.ts` blocks `/admin/*` and `/keystatic/*` without a valid cookie; every admin page and API route re-checks the session |
+| Alerts | Email on every sign-in, password change and new passkey (via Resend, to `ADMIN_ALERT_TO` or `CONTACT_TO`) |
+| Analytics | `/admin` reads PostHog's query API server-side |
+
+Env vars (Vercel):
+
+| Variable | Notes |
+|---|---|
+| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Added automatically when the Upstash integration is connected |
+| `ADMIN_SESSION_SECRET` | 48+ random chars (`openssl rand -base64 48`). Rotating it signs everyone out |
+| `ADMIN_SETUP_TOKEN` | One-time code for `/admin/setup`. Delete it from Vercel after setup |
+| `ADMIN_RP_ID` | `amrsamir.me` (passkeys are bound to this domain) |
+| `ADMIN_ALERT_TO` | Optional, defaults to `CONTACT_TO` |
+| `POSTHOG_PERSONAL_API_KEY`, `POSTHOG_PROJECT_ID` | PostHog → Settings → Personal API keys (scope: Query read only) / Project ID |
+| `NEXT_PUBLIC_KEYSTATIC_STORAGE=github` + Keystatic GitHub app vars | Turns on the editor in production |
+
+Lost access: delete the `admin:password` key in Upstash and set a new `ADMIN_SETUP_TOKEN`, then run `/admin/setup` again. Passkeys stay registered.

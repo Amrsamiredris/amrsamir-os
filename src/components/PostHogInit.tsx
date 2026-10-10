@@ -10,6 +10,12 @@ import posthog from "posthog-js";
 export function PostHogInit({ apiKey }: { apiKey: string }) {
   useEffect(() => {
     if (posthog.__loaded) return;
+    const path = window.location.pathname;
+    if (path.startsWith("/admin") || path.startsWith("/keystatic")) return;
+    let isOwner = false;
+    try {
+      isOwner = localStorage.getItem("amr_owner") === "1";
+    } catch {}
     posthog.init(apiKey, {
       api_host: "/ingest",
       ui_host: process.env.NEXT_PUBLIC_POSTHOG_UI_HOST ?? "https://eu.posthog.com",
@@ -18,6 +24,8 @@ export function PostHogInit({ apiKey }: { apiKey: string }) {
       person_profiles: "identified_only",
       session_recording: { maskAllInputs: true },
     });
+    // Don't count the site owner's own visits (set when signing in to /admin).
+    if (isOwner) posthog.opt_out_capturing();
   }, [apiKey]);
   return null;
 }

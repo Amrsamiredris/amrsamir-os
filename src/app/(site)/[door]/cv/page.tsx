@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCvExtras, getDoor, getExperience, getSite } from "@/lib/content";
 import { DOORS, type DoorSlug } from "@/lib/doors";
+import { TrackedLink } from "@/components/TrackedLink";
 
 export async function generateMetadata({ params }: PageProps<"/[door]/cv">): Promise<Metadata> {
   const { door } = (await params) as { door: DoorSlug };
@@ -26,9 +27,9 @@ export default async function DoorCv({ params }: PageProps<"/[door]/cv">) {
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h1 className="h2">{DOORS[door].label} CV</h1>
         {content.cvPdf || site.cvPdf ? (
-          <a href={content.cvPdf || site.cvPdf || undefined} className="btn btn-primary" download>
+          <TrackedLink event="cv_download" props={{ cv: door }} href={content.cvPdf || site.cvPdf || undefined} className="btn btn-primary" download>
             {content.cvPdf ? "Download PDF" : "Download full CV (PDF)"}
-          </a>
+          </TrackedLink>
         ) : (
           <span className="btn" aria-disabled="true" title="Upload a PDF for this track in the content editor">
             PDF not uploaded yet

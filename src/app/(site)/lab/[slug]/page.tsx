@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Window } from "@/components/Window";
 import { Prose } from "@/components/Prose";
+import { TrackedLink } from "@/components/TrackedLink";
 import { getLab, getLabItem } from "@/lib/content";
 
 export const dynamicParams = false;
@@ -31,9 +32,9 @@ export default async function LabItem({ params }: PageProps<"/lab/[slug]">) {
             <h1 className="display mt-3 text-[clamp(38px,5vw,68px)]">{i.title}</h1>
             {i.summary ? <p className="mt-4 max-w-[60ch] text-[18px] leading-[1.4]">{i.summary}</p> : null}
             {i.url ? (
-              <a href={i.url} className="btn btn-primary mt-6" target="_blank" rel="noopener noreferrer">
+              <TrackedLink event="company_click" props={{ company: i.title, from: "lab" }} href={i.url} className="btn btn-primary mt-6" target="_blank" rel="noopener">
                 Open {i.title}
-              </a>
+              </TrackedLink>
             ) : (
               <p className="subtle mt-6 text-[13px]">Not deployed yet.</p>
             )}

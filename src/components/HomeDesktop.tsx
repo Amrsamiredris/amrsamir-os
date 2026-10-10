@@ -8,6 +8,7 @@ import { AppIcon, type AppKey } from "./AppIcon";
 import { useNow } from "@/lib/useNow";
 import { DOORS, type DoorSlug } from "@/lib/doors";
 import { EventPool } from "./EventPool";
+import { TrackedLink } from "./TrackedLink";
 import { BrandStrip } from "./BrandStrip";
 import type { PoolEvent } from "@/lib/pool";
 
@@ -196,7 +197,9 @@ function AboutBody({ name, headline, about, location, languages, brands, compani
             <dt className="subtle">My companies</dt>
             <dd className="flex flex-wrap gap-x-3">
               {companies.map((c) => (
-                <a
+                <TrackedLink
+                  event="company_click"
+                  props={{ company: c.title, from: "desktop" }}
                   key={c.slug}
                   href={c.url}
                   target="_blank"
@@ -205,7 +208,7 @@ function AboutBody({ name, headline, about, location, languages, brands, compani
                 >
                   {c.title}
                   <span className="sr-only"> (opens in a new tab)</span>
-                </a>
+                </TrackedLink>
               ))}
             </dd>
           </>

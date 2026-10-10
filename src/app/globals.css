@@ -44,6 +44,8 @@
 
   /* v2: utility app tiles share the desktop's slate */
   --danger: #b42318;
+  --chart-ink: #2a2e37;
+  --chart-wash: rgb(42 46 55 / 0.09);
   --tile: #2a2e37;
   --tile-fg: #e3e6ed;
   --accent-ink: var(--label);
@@ -72,6 +74,8 @@
     --glass-sidebar: rgb(40 42 50 / 0.55);
     --glass-edge: rgb(255 255 255 / 0.12);
     --danger: #ff8a7a;
+    --chart-ink: #aab3c5;
+    --chart-wash: rgb(170 179 197 / 0.14);
     --tile: #383d49;
     --tile-fg: #eef0f4;
     --classic-bg: #101114;
@@ -1025,5 +1029,48 @@ a:active .app-icon {
 .contact-win .win-body {
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* ---------------- Admin (v2) ---------------- */
+
+.admin-tile,
+.admin-card {
+  border-radius: var(--radius-inner);
+  background: var(--glass-strong);
+  box-shadow: 0 0 0 0.5px var(--hairline-strong);
+}
+.admin-tile {
+  padding: 14px 16px;
+}
+.admin-card {
+  padding: 16px 18px;
+}
+.admin-navbtn {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--label);
+  text-align: left;
+  white-space: nowrap;
+}
+.admin-navbtn:hover {
+  background: var(--hairline);
+}
+.chart-tip {
+  position: absolute;
+  top: -8px;
+  translate: -50% -100%;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow-chip);
 }
 }

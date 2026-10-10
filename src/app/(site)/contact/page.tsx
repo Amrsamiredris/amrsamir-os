@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Window } from "@/components/Window";
 import { getSite } from "@/lib/content";
 import { ContactForm } from "@/components/ContactForm";
+import { TrackedLink } from "@/components/TrackedLink";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -49,9 +50,9 @@ export default async function Contact() {
             <a href={`mailto:${site.email}`} className="btn btn-primary">
               Email Amr
             </a>
-            <a href="/contact/vcard" className="btn" download>
+            <TrackedLink event="vcard_download" href="/contact/vcard" className="btn" download>
               Save contact card
-            </a>
+            </TrackedLink>
           </div>
           <p className="subtle mt-10 text-[12px] leading-relaxed">
             Privacy: this site counts visits and records anonymised sessions to see what people use. Form fields are masked in recordings. Messages are used only to reply to you.

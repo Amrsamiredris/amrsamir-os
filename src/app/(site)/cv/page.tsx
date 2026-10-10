@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Window } from "@/components/Window";
+import { TrackedLink } from "@/components/TrackedLink";
 import { getCvExtras, getExperience, getSite } from "@/lib/content";
 import { DOOR_SLUGS, DOORS } from "@/lib/doors";
 
@@ -32,9 +33,9 @@ export default async function Cv() {
               <p className="muted mt-3 max-w-[56ch]">Read it here, or download the PDF.</p>
             </div>
             {site.cvPdf ? (
-              <a href={site.cvPdf} className="btn btn-primary" download="Amr-Samir-Edris-CV.pdf">
+              <TrackedLink event="cv_download" props={{ cv: "main" }} href={site.cvPdf} className="btn btn-primary" download="Amr-Samir-Edris-CV.pdf">
                 Download CV (PDF)
-              </a>
+              </TrackedLink>
             ) : null}
           </div>
 
