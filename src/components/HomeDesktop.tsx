@@ -246,18 +246,25 @@ function ClassicClock() {
   );
 }
 
-const ICONS: { app: AppKey; label: string; href: string; download?: boolean }[] = [
+const ICONS: { app: AppKey; label: string; href: string; download?: boolean; external?: boolean }[] = [
   { app: "lab", label: "Lab", href: "/lab" },
   { app: "film", label: "Film", href: "/film" },
   { app: "cv", label: "CV", href: "/cv" },
   { app: "contact", label: "Contact card", href: "/contact/vcard", download: true },
+  { app: "eventechs", label: "Eventechs", href: "https://eventechs.vercel.app", external: true },
+  { app: "g4b", label: "Games for Brands", href: "https://games-for-brands.vercel.app", external: true },
 ];
 
 function DesktopIcons() {
   return (
-    <nav aria-label="Desktop" className="absolute top-5 right-4 z-[5] flex flex-col gap-3">
+    <nav aria-label="Desktop" className="absolute top-5 right-4 z-[5] flex flex-col gap-2">
       {ICONS.map((i) =>
-        i.download ? (
+        i.external ? (
+          <TrackedLink key={i.label} event="company_click" props={{ company: i.label, from: "desktop-icon" }} href={i.href} target="_blank" rel="noopener" className="desk-icon">
+            <AppIcon app={i.app} size={52} />
+            <span>{i.label}</span>
+          </TrackedLink>
+        ) : i.download ? (
           <a key={i.label} href={i.href} className="desk-icon" download>
             <AppIcon app={i.app} size={52} />
             <span>{i.label}</span>

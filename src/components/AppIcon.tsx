@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { DOORS } from "@/lib/doors";
 
-export type AppKey = "events" | "marketing" | "tech" | "lab" | "film" | "cv" | "contact";
+export type AppKey = "events" | "marketing" | "tech" | "lab" | "film" | "cv" | "contact" | "eventechs" | "g4b";
 
 const stroke = {
   fill: "none",
@@ -12,6 +12,22 @@ const stroke = {
 };
 
 const GLYPHS: Record<AppKey, ReactNode> = {
+  // Company marks, taken from each company's own favicon
+  eventechs: (
+    <svg viewBox="0 0 40 40" className="app-icon-full">
+      <path d="M8 14V8h6M26 8h6v6M32 26v6h-6M14 32H8v-6" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="square" />
+      <rect x="12.5" y="13" width="15" height="4.2" fill="#fff" />
+      <rect x="17.9" y="13" width="4.2" height="15" fill="#fff" />
+      <rect x="25" y="23.5" width="4" height="4" fill="#FF6B1A" />
+    </svg>
+  ),
+  g4b: (
+    <svg viewBox="0 0 40 40" className="app-icon-full">
+      <rect x="15.5" y="7" width="9" height="26" rx="3" fill="#ffe45c" />
+      <rect x="7" y="15.5" width="26" height="9" rx="3" fill="#ffe45c" />
+      <circle cx="20" cy="20" r="2.6" fill="#ff8fd0" />
+    </svg>
+  ),
   // spotlight on a stage
   events: (
     <svg viewBox="0 0 24 24" {...stroke}>
@@ -73,7 +89,9 @@ const GLYPHS: Record<AppKey, ReactNode> = {
  */
 const TILE = { bg: "var(--tile)", fg: "var(--tile-fg)" };
 
-export const APPS: Record<AppKey, { label: string; href: string; bg: string; fg: string; door?: boolean }> = {
+export const APPS: Record<AppKey, { label: string; href: string; bg: string; fg: string; door?: boolean; external?: boolean }> = {
+  eventechs: { label: "Eventechs", href: "https://eventechs.vercel.app", bg: "#2340FF", fg: "#fff", door: true, external: true },
+  g4b: { label: "Games for Brands", href: "https://games-for-brands.vercel.app", bg: "#3a2bf5", fg: "#ffe45c", door: true, external: true },
   events: { label: "Events", href: "/events", bg: DOORS.events.color, fg: "#fff", door: true },
   marketing: { label: "Marketing", href: "/marketing", bg: DOORS.marketing.color, fg: "#fff", door: true },
   tech: { label: "Tech", href: "/tech", bg: DOORS.tech.color, fg: "#fff", door: true },

@@ -5,7 +5,7 @@ import { TrackedLink } from "./TrackedLink";
 import { BrandStrip } from "./BrandStrip";
 import type { PoolEvent } from "@/lib/pool";
 
-const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "contact"];
+const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "contact", "eventechs", "g4b"];
 
 export function MobileHome({
   name,
@@ -71,10 +71,17 @@ export function MobileHome({
         <ul className="ios-grid">
           {GRID.map((k) => (
             <li key={k}>
-              <Link href={APPS[k].href} className="ios-app">
-                <AppIcon app={k} size={60} />
-                <span>{APPS[k].label}</span>
-              </Link>
+              {APPS[k].external ? (
+                <TrackedLink event="company_click" props={{ company: APPS[k].label, from: "mobile-icon" }} href={APPS[k].href} target="_blank" rel="noopener" className="ios-app">
+                  <AppIcon app={k} size={60} />
+                  <span>{APPS[k].label}</span>
+                </TrackedLink>
+              ) : (
+                <Link href={APPS[k].href} className="ios-app">
+                  <AppIcon app={k} size={60} />
+                  <span>{APPS[k].label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>

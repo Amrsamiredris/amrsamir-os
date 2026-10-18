@@ -6,6 +6,7 @@ import { useRef, type CSSProperties, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion, type MotionValue } from "motion/react";
 import { Wallpaper } from "./Wallpaper";
 import { AppIcon, APPS, type AppKey } from "./AppIcon";
+import { TrackedLink } from "./TrackedLink";
 import { useNow } from "@/lib/useNow";
 import { DOORS, isDoor } from "@/lib/doors";
 
@@ -109,7 +110,7 @@ function Clock() {
 
 /* ---------------- Dock ---------------- */
 
-const DOCK: (AppKey | "sep")[] = ["events", "marketing", "tech", "sep", "lab", "film", "cv", "contact"];
+const DOCK: (AppKey | "sep")[] = ["events", "marketing", "tech", "sep", "lab", "film", "cv", "contact", "sep", "eventechs", "g4b"];
 
 function Dock({ pathname }: { pathname: string }) {
   const mouseX = useMotionValue(Infinity);
@@ -151,11 +152,19 @@ function DockItem({ app, mouseX, active }: { app: AppKey; mouseX: MotionValue<nu
 
   return (
     <li className="dock-item" data-active={active}>
-      <Link ref={ref} href={a.href} aria-label={a.label} aria-current={active ? "page" : undefined}>
-        <motion.span style={{ display: "block", width: size, height: size }} className="dock-icon">
-          <AppIcon app={app} size={48} />
-        </motion.span>
-      </Link>
+      {a.external ? (
+        <TrackedLink ref={ref} event="company_click" props={{ company: a.label, from: "dock" }} href={a.href} target="_blank" rel="noopener" aria-label={`${a.label} (opens in a new tab)`}>
+          <motion.span style={{ display: "block", width: size, height: size }} className="dock-icon">
+            <AppIcon app={app} size={48} />
+          </motion.span>
+        </TrackedLink>
+      ) : (
+        <Link ref={ref} href={a.href} aria-label={a.label} aria-current={active ? "page" : undefined}>
+          <motion.span style={{ display: "block", width: size, height: size }} className="dock-icon">
+            <AppIcon app={app} size={48} />
+          </motion.span>
+        </Link>
+      )}
       <span className="dock-tip" aria-hidden="true">
         {a.label}
       </span>
