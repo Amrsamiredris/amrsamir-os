@@ -112,7 +112,7 @@ export default async function Overview({ searchParams }: { searchParams: Promise
           <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
             <Tile label="CV downloads" value={num(data.goals.cv)} />
             <Tile label="Forms sent" value={num(data.goals.contact)} />
-            <Tile label="Company site clicks" value={num(data.goals.companies)} note="Eventechs, Games for Brands" />
+            <Tile label="Company site clicks" value={num(data.goals.companies)} note="Eventechs, Games for Brands, Layerwise" />
             <Tile label="Contact cards saved" value={num(data.goals.vcard)} />
           </div>
 

@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { DOORS } from "@/lib/doors";
 
-export type AppKey = "events" | "marketing" | "tech" | "lab" | "film" | "cv" | "contact" | "eventechs" | "g4b";
+export type AppKey = "events" | "marketing" | "tech" | "lab" | "film" | "cv" | "contact" | "eventechs" | "g4b" | "layerwise";
 
 const stroke = {
   fill: "none",
@@ -26,6 +26,13 @@ const GLYPHS: Record<AppKey, ReactNode> = {
       <rect x="15.5" y="7" width="9" height="26" rx="3" fill="#ffe45c" />
       <rect x="7" y="15.5" width="26" height="9" rx="3" fill="#ffe45c" />
       <circle cx="20" cy="20" r="2.6" fill="#ff8fd0" />
+    </svg>
+  ),
+  layerwise: (
+    <svg viewBox="0 0 40 40" className="app-icon-full">
+      <rect x="6" y="25" width="22" height="7" fill="#0a0a0a" />
+      <rect x="10" y="16.5" width="22" height="7" fill="#f1e3b5" />
+      <rect x="14" y="8" width="22" height="7" fill="#b0298f" />
     </svg>
   ),
   // spotlight on a stage
@@ -92,6 +99,7 @@ const TILE = { bg: "var(--tile)", fg: "var(--tile-fg)" };
 export const APPS: Record<AppKey, { label: string; href: string; bg: string; fg: string; door?: boolean; external?: boolean }> = {
   eventechs: { label: "Eventechs", href: "https://eventechs.vercel.app", bg: "#2340FF", fg: "#fff", door: true, external: true },
   g4b: { label: "Games for Brands", href: "https://games-for-brands.vercel.app", bg: "#3a2bf5", fg: "#ffe45c", door: true, external: true },
+  layerwise: { label: "Layerwise", href: "https://layerwise-website.vercel.app", bg: "#cbe4f2", fg: "#0a0a0a", door: true, external: true },
   events: { label: "Events", href: "/events", bg: DOORS.events.color, fg: "#fff", door: true },
   marketing: { label: "Marketing", href: "/marketing", bg: DOORS.marketing.color, fg: "#fff", door: true },
   tech: { label: "Tech", href: "/tech", bg: DOORS.tech.color, fg: "#fff", door: true },

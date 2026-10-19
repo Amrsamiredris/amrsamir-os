@@ -110,7 +110,7 @@ function Clock() {
 
 /* ---------------- Dock ---------------- */
 
-const DOCK: (AppKey | "sep")[] = ["events", "marketing", "tech", "sep", "lab", "film", "cv", "contact", "sep", "eventechs", "g4b"];
+const DOCK: (AppKey | "sep")[] = ["events", "marketing", "tech", "sep", "lab", "film", "cv", "contact", "sep", "eventechs", "g4b", "layerwise"];
 
 function Dock({ pathname }: { pathname: string }) {
   const mouseX = useMotionValue(Infinity);

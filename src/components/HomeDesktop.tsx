@@ -253,6 +253,7 @@ const ICONS: { app: AppKey; label: string; href: string; download?: boolean; ext
   { app: "contact", label: "Contact card", href: "/contact/vcard", download: true },
   { app: "eventechs", label: "Eventechs", href: "https://eventechs.vercel.app", external: true },
   { app: "g4b", label: "Games for Brands", href: "https://games-for-brands.vercel.app", external: true },
+  { app: "layerwise", label: "Layerwise", href: "https://layerwise-website.vercel.app", external: true },
 ];
 
 function DesktopIcons() {

@@ -5,7 +5,7 @@ import { TrackedLink } from "./TrackedLink";
 import { BrandStrip } from "./BrandStrip";
 import type { PoolEvent } from "@/lib/pool";
 
-const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "contact", "eventechs", "g4b"];
+const GRID: AppKey[] = ["events", "marketing", "tech", "lab", "film", "cv", "contact", "eventechs", "g4b", "layerwise"];
 
 export function MobileHome({
   name,
