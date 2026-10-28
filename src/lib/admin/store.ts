@@ -10,6 +10,8 @@ import path from "node:path";
  */
 export interface Store {
   get<T = string>(key: string): Promise<T | null>;
+  /** Atomic read-and-delete. */
+  getdel<T = string>(key: string): Promise<T | null>;
   set(key: string, value: unknown, ttlSeconds?: number): Promise<void>;
   del(key: string): Promise<void>;
   incr(key: string, ttlSeconds: number): Promise<number>;
@@ -24,6 +26,7 @@ function redisStore(): Store {
   const r = new Redis({ url: url!, token: token! });
   return {
     get: (k) => r.get(k),
+    getdel: (k) => r.getdel(k),
     async set(k, v, ttl) {
       if (ttl) await r.set(k, v, { ex: ttl });
       else await r.set(k, v);
@@ -65,6 +68,13 @@ function fileStore(): Store {
   return {
     async get<T>(k: string) {
       return ((await load())[k]?.v as T) ?? null;
+    },
+    async getdel<T>(k: string) {
+      const d = await load();
+      const v = (d[k]?.v as T) ?? null;
+      delete d[k];
+      await save(d);
+      return v;
     },
     async set(k, v, ttl) {
       const d = await load();

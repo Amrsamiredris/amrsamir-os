@@ -2,7 +2,7 @@ import { guard, json, readJson } from "@/lib/admin/api";
 import { hashPassword } from "@/lib/admin/crypto";
 import { alert } from "@/lib/admin/notify";
 import { limited } from "@/lib/admin/ratelimit";
-import { consumeResetToken } from "@/lib/admin/reset";
+import { consumeResetToken, invalidateResetTokens } from "@/lib/admin/reset";
 import { audit, clientInfo, createSession, revokeAll } from "@/lib/admin/session";
 import { store } from "@/lib/admin/store";
 
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
   }
 
   await store().set("admin:password", await hashPassword(password));
+  await invalidateResetTokens();
   // Sign out every other device, then sign this one in.
   await revokeAll();
   await createSession("password");
