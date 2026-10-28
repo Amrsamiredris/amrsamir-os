@@ -116,8 +116,8 @@ export function PasswordChange() {
   return (
     <form onSubmit={submit} className="mt-4 grid max-w-[720px] gap-4 sm:grid-cols-3">
       <label className="field">
-        <span>Current</span>
-        <input name="current" type="password" required autoComplete="current-password" />
+        <span>Current (skip if you just used Touch ID)</span>
+        <input name="current" type="password" autoComplete="current-password" />
       </label>
       <label className="field">
         <span>New (12+ characters)</span>

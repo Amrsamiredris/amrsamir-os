@@ -92,4 +92,8 @@ Env vars (Vercel):
 | `POSTHOG_PERSONAL_API_KEY`, `POSTHOG_PROJECT_ID` | PostHog → Settings → Personal API keys (scope: Query read only) / Project ID |
 | `NEXT_PUBLIC_KEYSTATIC_STORAGE=github` + Keystatic GitHub app vars | Turns on the editor in production |
 
-Lost access: delete the `admin:password` key in Upstash and set a new `ADMIN_SETUP_TOKEN`, then run `/admin/setup` again. Passkeys stay registered.
+Lost access:
+
+1. **Forgot password** → `/admin/login` → "Forgot password?" (or `/admin/reset`) → a one-time link (20 min, single use, only its SHA-256 is stored) is emailed to `ADMIN_ALERT_TO` / `CONTACT_TO`. The recipient is fixed server-side, never typed by the visitor. Setting a new password signs out every other device. Rate limit: 3 requests/hour per IP, 6/hour site-wide. Link origin comes from `ADMIN_ORIGIN` or `https://$ADMIN_RP_ID`, never the Host header.
+2. **Signed in with a passkey in the last 15 min** → Security → change password without the old one.
+3. **Email broken too** → delete the `admin:password` key in Upstash, set a new `ADMIN_SETUP_TOKEN`, redeploy, run `/admin/setup`. Passkeys stay registered.

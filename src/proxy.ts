@@ -7,7 +7,7 @@ import { unsign } from "@/lib/admin/crypto";
  * so this is a fast outer gate, not the only one.
  */
 const COOKIE = process.env.NODE_ENV === "production" ? "__Host-amr_admin" : "amr_admin";
-const PUBLIC_ADMIN = ["/admin/login", "/admin/setup"];
+const PUBLIC_ADMIN = ["/admin/login", "/admin/setup", "/admin/reset"];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;

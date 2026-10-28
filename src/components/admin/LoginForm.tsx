@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { startAuthentication } from "@simplewebauthn/browser";
 import { post } from "./post";
@@ -58,6 +59,9 @@ export function LoginForm({ next, hasPasskeys }: { next: string; hasPasskeys: bo
           <button type="submit" className={`btn mt-4 w-full justify-center ${hasPasskeys ? "" : "btn-primary"}`} disabled={busy}>
             Sign in with password
           </button>
+          <Link href="/admin/reset" className="subtle mt-3 block text-center text-[13px] underline underline-offset-4">
+            Forgot password?
+          </Link>
         </form>
       ) : (
         <button type="button" className="subtle mt-4 text-[13px] underline underline-offset-4" onClick={() => setShowPassword(true)}>
