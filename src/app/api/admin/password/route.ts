@@ -3,6 +3,7 @@ import { hashPassword, verifyPassword } from "@/lib/admin/crypto";
 import { alert } from "@/lib/admin/notify";
 import { limited } from "@/lib/admin/ratelimit";
 import { audit, clientInfo, getSession } from "@/lib/admin/session";
+import { invalidateResetTokens } from "@/lib/admin/reset";
 import { store } from "@/lib/admin/store";
 
 export const dynamic = "force-dynamic";
@@ -23,6 +24,7 @@ export async function POST(req: Request) {
   }
   if (next.length < 12) return json(400, { error: "Use at least 12 characters." });
   await store().set("admin:password", await hashPassword(next));
+  await invalidateResetTokens();
   await audit("Password changed", info);
   await alert("Admin password changed", `The admin password was changed from IP ${info.ip}.`);
   return json(200, { ok: true });
