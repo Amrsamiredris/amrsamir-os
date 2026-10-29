@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Node build script for the CV PDF (CommonJS on purpose)
+    "cv-source/**",
   ]),
 ]);
 

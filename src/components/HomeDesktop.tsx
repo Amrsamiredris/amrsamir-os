@@ -96,7 +96,8 @@ export function HomeDesktop(props: Props) {
         z={z("clock")}
         onFocus={front}
         delay={0.24}
-        style={{ left: "2.4vw", bottom: 24, width: 220 }}
+        // Beside the Now window, clear of the About window and the desktop icons
+        style={{ left: "calc(4vw + clamp(420px, 38vw, 560px) + 390px)", bottom: 24, width: 220 }}
         render={(barProps) => (
           <ClassicWindow title="Clock 1.0" barProps={barProps}>
             <ClassicClock />
