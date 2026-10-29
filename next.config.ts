@@ -41,6 +41,8 @@ const nextConfig: NextConfig = {
   // Keystatic's local editor runs on 127.0.0.1
   allowedDevOrigins: ["127.0.0.1"],
   poweredByHeader: false,
+  // Auto-memoises components: fewer re-renders on the desktop (drag, dock, clock ticks)
+  reactCompiler: true,
   // Required for the PostHog proxy below
   skipTrailingSlashRedirect: true,
   turbopack: {

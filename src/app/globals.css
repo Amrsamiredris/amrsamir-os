@@ -19,12 +19,12 @@
   --wall-ink: #2a2e37;
 
   --label: #15161a;
-  --label-2: #464b55;
-  --label-3: #646a76;
+  --label-2: #40444d;
+  --label-3: #575c67; /* AA on frosted glass over the dither */
   --hairline: rgb(20 22 26 / 0.12);
   --hairline-strong: rgb(20 22 26 / 0.2);
 
-  --glass: rgb(248 249 251 / 0.68);
+  --glass: rgb(248 249 251 / 0.74);
   --glass-strong: rgb(250 250 252 / 0.86);
   --glass-sidebar: rgb(236 238 243 / 0.62);
   --glass-edge: rgb(255 255 255 / 0.75);
@@ -474,6 +474,10 @@ a:active .app-icon {
 .subtle {
   color: var(--label-3);
 }
+/* key/value labels sit on glass over the busiest dither: one step darker */
+dt.subtle {
+  color: var(--label-2);
+}
 .accent-ink {
   color: var(--accent-ink);
 }
@@ -599,8 +603,9 @@ a:active .app-icon {
   background: var(--hairline);
 }
 .door-sidebar a[aria-current="page"] {
-  background: color-mix(in srgb, var(--accent) 16%, transparent);
-  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  /* pulled toward the label colour so it stays AA on the tinted pill */
+  color: color-mix(in srgb, var(--accent-ink) 78%, var(--label));
   font-weight: 600;
 }
 .sidebar-heading {
@@ -674,7 +679,7 @@ a:active .app-icon {
   }
 }
 
-@media (max-height: 820px) {
+@media (max-height: 820px), (max-width: 1239px) {
   .desk-clock {
     display: none;
   }
@@ -853,7 +858,8 @@ a:active .app-icon {
 }
 .widget {
   border-radius: 22px;
-  background: var(--glass);
+  /* stronger glass: phone widgets sit on the busiest part of the dither */
+  background: var(--glass-strong);
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   box-shadow: var(--shadow-chip), inset 0 0.5px 0 var(--glass-edge);
@@ -951,7 +957,7 @@ a:active .app-icon {
   max-width: 40px;
   object-fit: contain;
   filter: brightness(0);
-  opacity: 0.62;
+  opacity: 0.78;
 }
 .brand-word {
   font-family: var(--font-display);
@@ -960,7 +966,7 @@ a:active .app-icon {
   letter-spacing: -0.02em;
   white-space: nowrap;
   color: var(--label);
-  opacity: 0.62;
+  opacity: 0.8;
 }
 @media (prefers-color-scheme: dark) {
   .brand-logo {
